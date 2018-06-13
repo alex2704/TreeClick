@@ -23,7 +23,7 @@ namespace TreeClick
         private void Form1_Load(object sender, EventArgs e)
         {
             tree = new Tree();
-            draw = new DrawTree(new Size(900, 600), tree);
+            draw = new DrawTree(new Size(750, 400), tree);
         }
         private void TreeForm_Paint(object sender, PaintEventArgs e)
         {
@@ -94,13 +94,16 @@ namespace TreeClick
 
         private void записатьПутиToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            tree.Root = new Node();
-            SelectedNode = tree.Root;
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string path = saveFileDialog.FileName;
-                tree.WriteTree(SelectedNode, path);
+                tree.WriteTree(saveFileDialog.FileName);
             }
+        }
+
+        private void SortTree_Click(object sender, EventArgs e)
+        {
+            tree.SortInsertionTree();
+            Refresh();
         }
     }
 }

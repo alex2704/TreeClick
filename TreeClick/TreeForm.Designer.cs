@@ -37,6 +37,7 @@
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.записатьПутиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.SortTree = new System.Windows.Forms.Button();
             this.contextMenuStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -100,11 +101,22 @@
             this.записатьПутиToolStripMenuItem.Text = "Записать пути";
             this.записатьПутиToolStripMenuItem.Click += new System.EventHandler(this.записатьПутиToolStripMenuItem_Click);
             // 
+            // SortTree
+            // 
+            this.SortTree.Location = new System.Drawing.Point(1055, 105);
+            this.SortTree.Name = "SortTree";
+            this.SortTree.Size = new System.Drawing.Size(207, 31);
+            this.SortTree.TabIndex = 3;
+            this.SortTree.Text = "Упорядочить дерево";
+            this.SortTree.UseVisualStyleBackColor = true;
+            this.SortTree.Click += new System.EventHandler(this.SortTree_Click);
+            // 
             // TreeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1405, 690);
+            this.Controls.Add(this.SortTree);
             this.Controls.Add(this.Generate_tree);
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
@@ -130,6 +142,7 @@
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem записатьПутиToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.Button SortTree;
     }
 }
 

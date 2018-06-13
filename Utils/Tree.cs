@@ -46,14 +46,24 @@ namespace Utils
         {
             Root = new Node();
         }
-        Random rnd = new Random();
+        public void Generate(int N, int K)
+        {
+            Root = Generate2(0, N, K);
+        }
+
+        private Node Generate2(int v, int N, int K)
+        {
+            return null;
+        }
+        //Random rnd = new Random();
         public void GenerateRandomTree(Node SelectedNode, int deep, int count, int t = 0)
         {
+            Random rnd = new Random();
             for (int j = 0; j < count; j++)
             {
                 Node node = new Node();
                 node.Parent = SelectedNode;
-                node.Value = rnd.Next(100);
+                node.Value = rnd.Next(4);
                 SelectedNode.Nodes.Add(node);
             }
             t++;
@@ -63,49 +73,67 @@ namespace Utils
                     GenerateRandomTree(SelectedNode.Nodes[i], deep, count, t);
             }
         }
-        List<double> NodesData { get; set; }
-        public void WriteTree(Node SelectedNode, string filename,int localCount = 0)
+        //List<Node> NodesData { get; set; }
+        //List<String> Ways { get; set; }
+        public void WriteTree(string FileName)
         {
-            if (SelectedNode != null)
+            List<Node>NodesData = new List<Node>();
+            List<string> Ways = new List<string>();
+            WriteTree(Root,  Ways, NodesData);
+            File.WriteAllLines(FileName, Ways);
+        }
+        private void WriteTree(Node SelectedNode, List<string> Ways,List<Node> NodesData)
+        {
+            NodesData.Add(SelectedNode);
+            if (SelectedNode.Nodes.Count != 0)
             {
-                NodesData.Add(SelectedNode.Value);
-                if (SelectedNode.Nodes.Count != 0)
-                    for (int i = 0; i < SelectedNode.Nodes.Count; i++)
-                    {
-                        localCount = i;
-                        WriteTree(SelectedNode.Nodes[i], filename, localCount);
-                    }
-                else
+                foreach (var item in SelectedNode.Nodes)
                 {
-                    using (StreamWriter sw = File.CreateText(filename))
-                    {
-                        string s = Convert.ToString(NodesData);
-                        sw.Write("{0}", s);
-                        NodesData.Remove(NodesData[localCount]);
-                        SelectedNode.Parent.Nodes.Remove(SelectedNode);
-                        WriteTree(SelectedNode.Parent, filename, localCount);
-                    }
+                    WriteTree(item, Ways,NodesData);
                 }
             }
+            else
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (var item in NodesData)
+                {
+                    sb.Append(item.Value.ToString() + " ");
+                }
+                Ways.Add(sb.ToString());
+            }
+            NodesData.Remove(SelectedNode);
         }
-        //private void WriteTreeHelper(Node SelectedNode, string filename, int localCount = 0)
-        //{
-        //    if (SelectedNode.Nodes.Count != 0)
-        //        for (int i = 0; i < SelectedNode.Nodes.Count; i++)
-        //        {
-        //            localCount = i;
-        //            WriteTree(SelectedNode.Nodes[i], filename, localCount);
-        //        }
-        //    else
-        //    {
-        //        using (StreamWriter sw = File.CreateText(filename))
-        //        {
-        //            string s = Convert.ToString(NodesData);
-        //            sw.Write("{0}", s);
-        //            NodesData.Remove(NodesData[localCount]);
-        //            WriteTreeHelper(SelectedNode.Parent, filename, localCount);
-        //        }
-        //    }
-        //}
+        public void SortInsertionTree()
+        {
+            SortInsertionTree(Root);
+        }
+        private void SortInsertionTree(Node SelectedNode)
+        {
+            if (SelectedNode.Nodes.Count != 0)
+            {
+                SortInsertion(SelectedNode.Nodes);
+                foreach(Node item in SelectedNode.Nodes)
+                {
+                    SortInsertionTree(item);
+                }
+            }
+            //return SelectedNode.Nodes;
+        }
+        private List<Node> SortInsertion(List<Node> mas)
+        {
+            for (int i = 1; i < mas.Count; i++)
+            {
+                int j = i;
+                Node tmpNode = mas[j];
+                double tmp = mas[j].Value;
+                while (j > 0 && tmp < mas[j - 1].Value)
+                {
+                    mas[j] = mas[j - 1];
+                    j--;
+                }
+                mas[j] = tmpNode;
+            }
+            return mas;
+        }
     }
 }
